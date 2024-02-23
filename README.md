@@ -174,4 +174,4 @@ openapi: 3.0.0
 info:
   title: "Система управління освітою
 
-![Моя фотографія](scheme,png.png)
+![Схема]([scheme,png.png](https://github.com/vorobecandrij54/string/blob/main/scheme.png.png)https://github.com/vorobecandrij54/string/blob/main/scheme.png.png)
