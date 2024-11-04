@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список студентів</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #333;
+            color: #eee;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #fff;
+        }
+
+        .students-list table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .students-list th, .students-list td {
+            padding: 10px;
+            border: 1px solid #555;
+            text-align: left;
+        }
+
+        .add-button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .add-button:hover {
+            background-color: #218838;
+        }
+
+        #addStudentForm {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #444;
+            border-radius: 5px;
+            color: #fff;
+        }
+
+        #addStudentForm label {
+            display: block;
+            margin: 10px 0;
+        }
+
+        #addStudentForm input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            background-color: #555;
+            color: #eee;
+            border: 1px solid #666;
+            border-radius: 4px;
+        }
+
+        #addStudentForm button {
+            margin-top: 10px;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        #addStudentForm button:hover {
+            background-color: #0069d9;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>Студенти</h1>
+    </header>
+    <section class="students-list">
+        <table>
+            <thead>
+            <tr>
+                <th>Ім'я</th>
+                <th>Прізвище</th>
+                <th>Рік вступу</th>
+                <th>Курс</th>
+                <th>Спеціальність</th>
+                <th>Дії</th>
+            </tr>
+            </thead>
+            <tbody id="studentsTable">
+            <!-- Статичні дані для студентів -->
+            <tr>
+                <td>John</td>
+                <td>Doe</td>
+                <td>2023</td>
+                <td>1</td>
+                <td>Computer Science</td>
+                <td><button onclick="deleteStudent(this)">Видалити</button></td>
+            </tr>
+            <tr>
+                <td>Jane</td>
+                <td>Doe</td>
+                <td>2022</td>
+                <td>2</td>
+                <td>Mathematics</td>
+                <td><button onclick="deleteStudent(this)">Видалити</button></td>
+            </tr>
+            </tbody>
+        </table>
+        <button class="add-button" onclick="showAddStudentForm()">Додати студента</button>
+    </section>
+
+    <section id="addStudentForm" class="hidden">
+        <h2>Додати студента</h2>
+        <form onsubmit="addStudent(event)">
+            <label>Ім'я: <input type="text" id="newStudentName" required></label><br>
+            <label>Прізвище: <input type="text" id="newStudentSurname" required></label><br>
+            <label>Рік вступу: <input type="number" id="newStudentYear" required></label><br>
+            <label>Курс: <input type="number" id="newStudentCourse" required></label><br>
+            <label>Спеціальність: <input type="text" id="newStudentSpecialty" required></label><br>
+            <button type="submit">Додати</button>
+            <button type="button" onclick="hideAddStudentForm()">Скасувати</button>
+        </form>
+    </section>
+</div>
+
+<script>
+    // Показати форму додавання студента
+    function showAddStudentForm() {
+        document.getElementById("addStudentForm").classList.remove("hidden");
+    }
+
+    // Сховати форму додавання студента
+    function hideAddStudentForm() {
+        document.getElementById("addStudentForm").classList.add("hidden");
+    }
+
+    // Додати нового студента до таблиці
+    function addStudent(event) {
+        event.preventDefault();
+
+        const name = document.getElementById("newStudentName").value;
+        const surname = document.getElementById("newStudentSurname").value;
+        const year = document.getElementById("newStudentYear").value;
+        const course = document.getElementById("newStudentCourse").value;
+        const specialty = document.getElementById("newStudentSpecialty").value;
+
+        const table = document.getElementById("studentsTable");
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${name}</td>
+            <td>${surname}</td>
+            <td>${year}</td>
+            <td>${course}</td>
+            <td>${specialty}</td>
+            <td><button onclick="deleteStudent(this)">Видалити</button></td>
+        `;
+        table.appendChild(row);
+
+        // Очистити форму і сховати її
+        hideAddStudentForm();
+        document.getElementById("addStudentForm").reset();
+    }
+
+    // Видалити студента з таблиці
+    function deleteStudent(button) {
+        const row = button.parentElement.parentElement;
+        row.remove();
+    }
+</script>
+</body>
+</html>

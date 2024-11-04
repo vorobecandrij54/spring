@@ -1,0 +1,99 @@
+document.addEventListener("DOMContentLoaded", () => {
+    loadStatistics();
+    loadStudents();
+    loadSubjects();
+    loadTeachers();
+});
+
+function showSection(sectionId) {
+    // Приховуємо всі секції
+    document.querySelectorAll('.content-section').forEach(section => {
+        section.classList.add('hidden');
+    });
+    // Показуємо потрібну секцію
+    document.getElementById(sectionId).classList.remove('hidden');
+}
+
+async function loadStatistics() {
+    const response = await fetch('/api/statistics');
+    const data = await response.json();
+    document.getElementById("studentCount").innerText = data.studentCount;
+    document.getElementById("subjectCount").innerText = data.subjectCount;
+    document.getElementById("teacherCount").innerText = data.teacherCount;
+}
+
+async function loadStudents() {
+    const response = await fetch('/api/students');
+    const students = await response.json();
+    const table = document.getElementById("studentsTable");
+    table.innerHTML = '';
+    students.forEach(student => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${student.name}</td>
+            <td>${student.surname}</td>
+            <td>${student.yearOfAdmission}</td>
+            <td>${student.course}</td>
+            <td>${student.specialty}</td>
+            <td><button onclick="deleteStudent(${student.id})">Видалити</button></td>
+        `;
+        table.appendChild(row);
+    });
+}
+
+async function loadSubjects() {
+    const response = await fetch('/api/subjects');
+    const subjects = await response.json();
+    const table = document.getElementById("subjectsTable");
+    table.innerHTML = '';
+    subjects.forEach(subject => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${subject.subjectName}</td>
+            <td><button onclick="deleteSubject(${subject.id})">Видалити</button></td>
+        `;
+        table.appendChild(row);
+    });
+}
+
+async function loadTeachers() {
+    const response = await fetch('/api/teachers');
+    const teachers = await response.json();
+    const table = document.getElementById("teachersTable");
+    table.innerHTML = '';
+    teachers.forEach(teacher => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${teacher.name}</td>
+            <td>${teacher.surname}</td>
+            <td>${teacher.email}</td>
+            <td>${teacher.phoneNumber}</td>
+            <td><button onclick="deleteTeacher(${teacher.id})">Видалити</button></td>
+        `;
+        table.appendChild(row);
+    });
+}
+
+function addStudent() {
+    alert('Функція додавання студента ще не реалізована');
+}
+
+function addSubject() {
+    alert('Функція додавання предмета ще не реалізована');
+}
+
+function addTeacher() {
+    alert('Функція додавання викладача ще не реалізована');
+}
+
+function deleteStudent(id) {
+    alert(`Видалення студента з id ${id} ще не реалізовано`);
+}
+
+function deleteSubject(id) {
+    alert(`Видалення предмета з id ${id} ще не реалізовано`);
+}
+
+function deleteTeacher(id) {
+    alert(`Видалення викладача з id ${id} ще не реалізовано`);
+}

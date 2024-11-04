@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список викладачів</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #333;
+            color: #eee;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #fff;
+        }
+
+        .teachers-list table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .teachers-list th, .teachers-list td {
+            padding: 10px;
+            border: 1px solid #555;
+            text-align: left;
+        }
+
+        .add-button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .add-button:hover {
+            background-color: #218838;
+        }
+
+        #addTeacherForm {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #444;
+            border-radius: 5px;
+            color: #fff;
+        }
+
+        #addTeacherForm label {
+            display: block;
+            margin: 10px 0;
+        }
+
+        #addTeacherForm input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            background-color: #555;
+            color: #eee;
+            border: 1px solid #666;
+            border-radius: 4px;
+        }
+
+        #addTeacherForm button {
+            margin-top: 10px;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        #addTeacherForm button:hover {
+            background-color: #0069d9;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>Викладачі</h1>
+    </header>
+    <section class="teachers-list">
+        <table>
+            <thead>
+            <tr>
+                <th>Ім'я</th>
+                <th>Прізвище</th>
+                <th>Електронна пошта</th>
+                <th>Телефон</th>
+                <th>Дії</th>
+            </tr>
+            </thead>
+            <tbody id="teachersTable">
+            <!-- Статичні дані для викладачів -->
+            <tr>
+                <td>Albert</td>
+                <td>Einstein</td>
+                <td>einstein@example.com</td>
+                <td>123456789</td>
+                <td><button onclick="deleteTeacher(this)">Видалити</button></td>
+            </tr>
+            <tr>
+                <td>Isaac</td>
+                <td>Newton</td>
+                <td>newton@example.com</td>
+                <td>987654321</td>
+                <td><button onclick="deleteTeacher(this)">Видалити</button></td>
+            </tr>
+            </tbody>
+        </table>
+        <button class="add-button" onclick="showAddTeacherForm()">Додати викладача</button>
+    </section>
+
+    <section id="addTeacherForm" class="hidden">
+        <h2>Додати викладача</h2>
+        <form onsubmit="addTeacher(event)">
+            <label>Ім'я: <input type="text" id="newTeacherFirstName" required></label>
+            <label>Прізвище: <input type="text" id="newTeacherLastName" required></label>
+            <label>Електронна пошта: <input type="email" id="newTeacherEmail" required></label>
+            <label>Телефон: <input type="text" id="newTeacherPhone" required></label>
+            <button type="submit">Додати</button>
+            <button type="button" onclick="hideAddTeacherForm()">Скасувати</button>
+        </form>
+    </section>
+</div>
+
+<script>
+    // Показати форму додавання викладача
+    function showAddTeacherForm() {
+        document.getElementById("addTeacherForm").classList.remove("hidden");
+    }
+
+    // Сховати форму додавання викладача
+    function hideAddTeacherForm() {
+        document.getElementById("addTeacherForm").classList.add("hidden");
+    }
+
+    // Додати нового викладача до таблиці
+    function addTeacher(event) {
+        event.preventDefault();
+
+        const firstName = document.getElementById("newTeacherFirstName").value;
+        const lastName = document.getElementById("newTeacherLastName").value;
+        const email = document.getElementById("newTeacherEmail").value;
+        const phone = document.getElementById("newTeacherPhone").value;
+
+        const table = document.getElementById("teachersTable");
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${firstName}</td>
+            <td>${lastName}</td>
+            <td>${email}</td>
+            <td>${phone}</td>
+            <td><button onclick="deleteTeacher(this)">Видалити</button></td>
+        `;
+        table.appendChild(row);
+
+        // Очистити форму і сховати її
+        hideAddTeacherForm();
+        document.getElementById("addTeacherForm").reset();
+    }
+
+    // Видалити викладача з таблиці
+    function deleteTeacher(button) {
+        const row = button.parentElement.parentElement;
+        row.remove();
+    }
+</script>
+</body>
+</html>
