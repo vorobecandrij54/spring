@@ -1,0 +1,15 @@
+-- Додавання студентів
+INSERT INTO students (name, surname, year_of_admission, course, specialty) VALUES
+                                                                               ('John', 'Doe', '2023', 1, 'Computer Science'),
+                                                                               ('Jane', 'Doe', '2022', 2, 'Mathematics');
+
+-- Додавання предметів
+INSERT INTO subjects (subject_name) VALUES
+                                        ('Mathematics'),
+                                        ('Physics'),
+                                        ('Computer Science');
+
+-- Додавання викладачів
+INSERT INTO teachers (name, surname, email, phone_number) VALUES
+                                                              ('Albert', 'Einstein', 'einstein@example.com', '123456789'),
+                                                              ('Isaac', 'Newton', 'newton@example.com', '987654321');
